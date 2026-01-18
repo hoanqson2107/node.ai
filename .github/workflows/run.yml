@@ -1,0 +1,25 @@
+name: Run Node App
+
+on:
+  workflow_dispatch:      # cho bấm Run tay
+  push:
+    branches: [ main ]    # chạy khi push code
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run app.js
+        run: node app.js
