@@ -1,9 +1,10 @@
 name: Run Node App
 
 on:
-  workflow_dispatch:      # cho bấm Run tay
+  workflow_dispatch:
   push:
-    branches: [ main ]    # chạy khi push code
+    branches:
+      - main
 
 jobs:
   run:
@@ -13,13 +14,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+
+      - name: Show Node version
+        run: node -v
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          if [ -f package.json ]; then
+            npm install
+          else
+            echo "No package.json, skip npm install"
+          fi
 
       - name: Run app.js
         run: node app.js
